@@ -1,4 +1,4 @@
-# QIMA_BE Project
+# QIMA Project
 
 ## Overview
 
