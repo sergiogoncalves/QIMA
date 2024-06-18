@@ -4,12 +4,9 @@ import {ProductService} from "../../service/product.service";
 import {ProductFormComponent} from "../product-form/product-form.component";
 import { MatDialog } from '@angular/material/dialog';
 
-
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
   products: Product[] = [];
@@ -37,23 +34,41 @@ export class ProductComponent implements OnInit {
   }
 
   editProduct(product: Product) {
-  // Implement your logic for editing a product here.
-  // For example, you might want to assign the product to the selectedProduct property:
-  this.selectedProduct = product;
-}
+
+    let productCopy = JSON.parse(JSON.stringify(product));
+
+    console.log('Product Copy:', productCopy)
+
+    const dialogRef = this.dialog.open(ProductFormComponent, {
+      data: { product: productCopy }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProducts();
+    });
+  }
 
 deleteProduct(product: Product) {
-  this.productService.deleteProduct(product.id).subscribe(() => {
-    this.products = this.products.filter(p => p.id !== product.id);
-  });
+
+  if (window.confirm('Are you sure you want to delete this product?')) {
+    this.productService.deleteProduct(product.id).subscribe(() => {
+      this.products = this.products.filter(p => p.id !== product.id);
+    });
+  }
 }
 
+
+
 openAddProductPopup() {
-  this.selectedProduct = new Product(); // Create a new product
+  this.selectedProduct = new Product();
 
   const dialogRef = this.dialog.open(ProductFormComponent, {
     width: '500px',
     data: {product: this.selectedProduct}
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    this.getProducts();
   });
 }
 

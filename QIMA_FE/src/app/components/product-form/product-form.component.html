@@ -1,11 +1,23 @@
-<form>
-    <!-- Add form fields for the product properties -->
-    <input [(ngModel)]="product.name" placeholder="Name">
-    <input [(ngModel)]="product.description" placeholder="Description">
-    <input [(ngModel)]="product.price" placeholder="Price">
-    <select [(ngModel)]="product.category">
-        <option *ngFor="let category of categories" [value]="category">{{category.name}}</option>
-    </select>
+<div class="form-container">
+<form  (ngSubmit)="onSubmit()">
+    <div class="form-field">
+        <input class="form-input" [(ngModel)]="product.name" name="name" placeholder="Name">
+    </div>
+
+    <div class="form-field">
+        <input class="form-input" [(ngModel)]="product.price" name="price" placeholder="Price">
+    </div>
+    <div class="form-field">
+        <select class="form-input" [(ngModel)]="product.category" name="category" [compareWith]="compareCategories">
+            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+        </select>
+    </div>
     <!-- Add other fields as needed -->
-    <button type="submit">Submit</button>
+    <div class="form-field">
+        <button mat-button type="submit">Save</button>
+    </div>
+    <div class="form-field">
+        <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+    </div>
 </form>
+</div>

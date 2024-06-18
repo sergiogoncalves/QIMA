@@ -23,7 +23,11 @@ public class ProductMapper {
 
     public Product toEntity(ProductDTO dto) {
         Product product = new Product();
-        product.setId(dto.getId());
+
+        if (dto.getId() != null) {
+            product.setId(dto.getId());
+        }
+
         product.setName(dto.getName());
         product.setCategory(categoryMapper.toEntity(dto.getCategory()));
         product.setPrice(dto.getPrice());
