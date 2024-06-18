@@ -1,8 +1,9 @@
 package com.qima.services;
 
+import com.qima.dto.ProductDTO;
 import com.qima.entities.Product;
 import com.qima.repositories.ProductRepository;
-import com.qima.services.ProductService;
+import com.qima.services.mapper.ProductMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,6 +22,9 @@ public class ProductServiceTest {
     @Mock
     private ProductRepository productRepository;
 
+    @Mock
+    private ProductMapper productMapper;
+
     @InjectMocks
     private ProductService productService;
 
@@ -33,11 +37,17 @@ public class ProductServiceTest {
     public void getProductsReturnsAllProducts() {
         Product product1 = new Product();
         Product product2 = new Product();
-        List<Product> expectedProducts = Arrays.asList(product1, product2);
+        List<Product> products = Arrays.asList(product1, product2);
 
-        when(productRepository.findAll()).thenReturn(expectedProducts);
+        ProductDTO productDTO1 = new ProductDTO();
+        ProductDTO productDTO2 = new ProductDTO();
+        List<ProductDTO> expectedProducts = Arrays.asList(productDTO1, productDTO2);
 
-        List<Product> actualProducts = productService.getProducts();
+        when(productRepository.findAll()).thenReturn(products);
+        when(productMapper.toDTO(product1)).thenReturn(productDTO1);
+        when(productMapper.toDTO(product2)).thenReturn(productDTO2);
+
+        List<ProductDTO> actualProducts = productService.getAllProducts();
 
         assertEquals(expectedProducts, actualProducts);
     }
@@ -46,7 +56,7 @@ public class ProductServiceTest {
     public void getProductsReturnsEmptyList() {
         when(productRepository.findAll()).thenReturn(Collections.emptyList());
 
-        List<Product> actualProducts = productService.getProducts();
+        List<ProductDTO> actualProducts = productService.getAllProducts();
 
         assertEquals(Collections.emptyList(), actualProducts);
     }

@@ -15,9 +15,7 @@ public class ProductMapperTest {
     @BeforeEach
     public void setup() {
 
-        CategoryMapper categoryMapper = Mockito.mock(CategoryMapper.class);
-        productMapper = new ProductMapper();
-        productMapper.setCategoryMapper(categoryMapper);
+        productMapper = new ProductMapper(new CategoryMapper());
     }
 
     @Test

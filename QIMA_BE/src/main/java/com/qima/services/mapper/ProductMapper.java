@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductMapper {
 
+    public ProductMapper(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
+    }
+
     CategoryMapper categoryMapper;
 
     public ProductDTO toDTO(Product product) {
@@ -35,7 +39,4 @@ public class ProductMapper {
         return product;
     }
 
-    public void setCategoryMapper(CategoryMapper categoryMapper) {
-        this.categoryMapper = categoryMapper;
-    }
 }
