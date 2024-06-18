@@ -2,14 +2,14 @@ package com.qima.services.mapper;
 
 import com.qima.dto.ProductDTO;
 import com.qima.entities.Product;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductMapper {
 
-    @Autowired
-    private CategoryMapper categoryMapper;
+    CategoryMapper categoryMapper;
 
     public ProductDTO toDTO(Product product) {
         ProductDTO dto = new ProductDTO();
@@ -33,5 +33,9 @@ public class ProductMapper {
         product.setPrice(dto.getPrice());
         product.setAvailable(dto.isAvailable());
         return product;
+    }
+
+    public void setCategoryMapper(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
     }
 }

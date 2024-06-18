@@ -21,14 +21,17 @@ import java.io.IOException;
 @RestController
 public class AuthenticationController {
 
-    @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    public AuthenticationController(JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+    }
 
     @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationDTO authenticationDTO, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
