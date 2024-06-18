@@ -1,0 +1,32 @@
+<input [(ngModel)]="productFilter.name" placeholder="Filter by name">
+
+<table>
+  <thead>
+    <tr>
+      <th (click)="setOrder('name')">Name</th>
+      <th (click)="setOrder('description')">Description</th>
+      <th (click)="setOrder('price')">Price</th>
+      <th (click)="setOrder('categoryPath')">Category Path</th>
+      <th (click)="setOrder('available')">Available</th>
+      <!-- Add other columns as needed -->
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products | filterBy: productFilter | orderBy: order:reverse">
+      <td>{{ product.name }}</td>
+      <td>{{ product.category.name }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.categoryPath }}</td>
+        <td>{{ product.available ? 'Yes' : 'No' }}</td>
+      <!-- Add other columns as needed -->
+      <td>
+        <button mat-button (click)="editProduct(product)">Edit</button>
+        <button mat-button (click)="deleteProduct(product)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button mat-button (click)="openAddProductPopup()">Add product</button>
+<!-- Add/Edit form... -->
